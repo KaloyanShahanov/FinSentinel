@@ -20,7 +20,7 @@ def send_test_email():
         logging.info("Connecting to ABV SMTP server...")
         with smtplib.SMTP_SSL("smtp.abv.bg", 465) as server:
             logging.info("Logging in...")
-            server.login(sender, "kaloqn123")  # Replace with your real password
+            server.login(sender, "abv email password")  
             logging.info("Sending email...")
             server.send_message(msg)
             logging.info("Test email sent successfully.")
