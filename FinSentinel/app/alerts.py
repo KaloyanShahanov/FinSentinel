@@ -31,7 +31,7 @@ def send_email_alert(coin_name, price):
 
     try:
         with smtplib.SMTP_SSL("smtp.abv.bg", 465) as server:
-            server.login(sender, "kaloqn123")
+            server.login(sender, "abv password") # replace with abv sender email password
             server.send_message(msg)
             print(f"Email alert sent for {coin_name}.")
     except Exception as e:
