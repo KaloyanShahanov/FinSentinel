@@ -19,8 +19,8 @@ import smtplib
 from email.mime.text import MIMEText
 
 def send_email_alert(coin_name, price):
-    sender = "kaloqnshahanov@abv.bg"
-    recipient = "kaloqnshahanov@abv.bg"
+    sender = "kaloqnshahanov@abv.bg" # the sender is the person who owns the web application
+    recipient = "kaloqnshahanov@abv.bg"  # who receives the alert
     subject = f"{coin_name} Price Alert"
     body = f"{coin_name} price alert! Current price: ${price}"
 
@@ -31,7 +31,7 @@ def send_email_alert(coin_name, price):
 
     try:
         with smtplib.SMTP_SSL("smtp.abv.bg", 465) as server:
-            server.login(sender, "kaloqn123")
+            server.login(sender, "abv email password") # insert the abv password used to login to the sender email
             server.send_message(msg)
             print(f"Email alert sent for {coin_name}.")
     except Exception as e:
@@ -60,7 +60,7 @@ import logging
 #       logging.info("Connecting to ABV SMTP server...")
 #       with smtplib.SMTP_SSL("smtp.abv.bg", 465) as server:
 #            logging.info("Logging in...")
-#            server.login(sender, "kaloqn123") 
+#            server.login(sender, "abv email password") 
 #            logging.info("Sending email...")
 #            server.send_message(msg)
 #           logging.info("Test email sent successfully.")
