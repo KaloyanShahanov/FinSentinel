@@ -1,0 +1,3 @@
+client_id,amount,currency,country,timestamp
+1,12000,USD,X,2025-07-01T10:00:00
+2,3000,USD,Y,2025-07-01T11:00:00
