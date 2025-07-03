@@ -15,7 +15,7 @@ def send_email_alert(price):
     try:
         with smtplib.SMTP("smtp.abv.bg", 587) as server:
             server.starttls()
-            server.login("kaloqnshahanov@abv.bg", "kaloqn123")
+            server.login("testing email login", "testing password")
             server.send_message(msg)
             print("Email alert sent.")
     except Exception as e:
