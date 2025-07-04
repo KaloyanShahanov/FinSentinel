@@ -1,34 +1,25 @@
-import logging
-from app.api import app
-from app.sentinel import start_crypto_monitor
-#from app.alerts import send_test_email  
+import tkinter as tk
+from app.sentinel import start_crypto_monitor, stop_crypto_monitor
 
-if __name__ == "__main__":
-    # Configure logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
+# GUI Setup
+root = tk.Tk()
+root.title("Crypto Price Monitor")
+root.geometry("300x150")
 
-   # logging.info("Sending test email alert at startup...")
-   # try:
-   #     send_test_email()
-   #     logging.info("Test email alert sent successfully.")
-   # except Exception as e:
-   #    logging.error(f"Failed to send test email alert: {e}")
+def start_monitor():
+    start_crypto_monitor()
+    status_label.config(text="Monitoring started")
 
-    logging.info("Starting crypto monitor thread...")
-    try:
-        start_crypto_monitor()
-        logging.info("Crypto monitor started successfully.")
-    except Exception as e:
-        logging.error(f"Failed to start crypto monitor: {e}")
+def stop_monitor():
+    stop_crypto_monitor()
+    status_label.config(text="Monitoring stopped")
 
-    import uvicorn
+tk.Label(root, text="FinSentinel Monitor", font=("Arial", 14)).pack(pady=10)
 
-    logging.info("Starting FastAPI server...")
-    try:
-        uvicorn.run(app, host="0.0.0.0", port=8000)
-    except Exception as e:
-        logging.error(f"Failed to start FastAPI server: {e}")
+tk.Button(root, text="Start", width=15, command=start_monitor).pack(pady=5)
+tk.Button(root, text="Stop", width=15, command=stop_monitor).pack(pady=5)
+
+status_label = tk.Label(root, text="Not monitoring")
+status_label.pack(pady=10)
+
+root.mainloop()

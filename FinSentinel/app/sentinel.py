@@ -1,90 +1,49 @@
-import requests
-import time
 import threading
-from app.alerts import send_email_alert, send_slack_alert
+import time
+import requests
+from app.alerts import send_slack_alert
 
-last_prices = {}
+running = False
+monitor_thread = None
 
-# API functions for multi-coin 
-
-def fetch_price_coingecko(coin_id):
-    url = f"https://api.coingecko.com/api/v3/simple/price?ids={coin_id}&vs_currencies=usd"
-    data = requests.get(url).json()
-    return data[coin_id]["usd"]
-
-def fetch_price_coincap(symbol):
-    url = f"https://api.coincap.io/v2/assets/{symbol.lower()}"
-    data = requests.get(url).json()
-    return float(data["data"]["priceUsd"])
-
-def fetch_price_binance(symbol):
-    url = f"https://api.binance.com/api/v3/ticker/price?symbol={symbol}USDT"
+def fetch_price_binance():
+    url = "https://api.binance.com/api/v3/ticker/price?symbol=BTCEUR"
     data = requests.get(url).json()
     return float(data["price"])
 
-# multi-API for a single coin
+def fetch_price_bitfinex():
+    url = "https://api-pub.bitfinex.com/v2/ticker/tBTCEUR"
+    data = requests.get(url).json()
+    return float(data[6])  # Last price
 
-def average_price(coin):
-    prices = []
-    try: prices.append(fetch_price_coingecko(coin["coingecko_id"]))
-    except: print(f"Error: CoinGecko for {coin['name']}")
-    try: prices.append(fetch_price_coincap(coin["coincap_id"]))
-    except: print(f"Error: CoinCap for {coin['name']}")
-    try: prices.append(fetch_price_binance(coin["binance_symbol"]))
-    except: print(f"Error: Binance for {coin['name']}")
-
-    if prices:
-        return sum(prices) / len(prices)
-    else:
-        raise Exception(f"No prices fetched for {coin['name']}")
-
-# def send_test_email():
-#    test_name = "TestCoin"
-#    test_price = 1234.56
-#    print("Sending test email alert...")
-#    send_email_alert(test_name, test_price)
-#    send_slack_alert(test_name, test_price)
-#    print("Test alerts sent.")
-
-# main monitor loop
-
-coins = [
-    {"name": "Bitcoin", "coingecko_id": "bitcoin", "coincap_id": "bitcoin", "binance_symbol": "BTC"},
-    {"name": "Ethereum", "coingecko_id": "ethereum", "coincap_id": "ethereum", "binance_symbol": "ETH"},
-    {"name": "Dogecoin", "coingecko_id": "dogecoin", "coincap_id": "dogecoin", "binance_symbol": "DOGE"},
-]
-
-def monitor_crypto():
-    global last_prices
-    while True:
+def monitor_loop():
+    global running
+    while running:
         try:
-            for coin in coins:
-                price = average_price(coin)
-                name = coin["name"]
-                print(f"{name} Price: ${round(price, 4)}")
+            price_binance = fetch_price_binance()
+            price_bitfinex = fetch_price_bitfinex()
 
-                if name in last_prices:
-                    last_price = last_prices[name]
-                    drop_percent = (last_price - price) / last_price
-                    rise_percent = (price - last_price) / last_price
+            avg = (price_binance + price_bitfinex) / 2
+            diff = abs(price_binance - price_bitfinex)
+            percent_diff = (diff / avg) * 100
 
-                    if drop_percent >= 0.05:
-                        alert_message = f"{name} price dropped by {drop_percent*100:.2f}%! Now: ${round(price, 4)}"
-                        send_email_alert(name, round(price, 4))
-                        send_slack_alert(name, round(price, 4))
+            print(f"Binance: {price_binance:.6f}, Bitfinex: {price_bitfinex:.6f}, Diff: {percent_diff:.8f}%")
 
-                    elif rise_percent >= 0.05:
-                        alert_message = f"{name} price rose by {rise_percent*100:.2f}%! Now: ${round(price, 4)}"
-                        send_email_alert(name, round(price, 4))
-                        send_slack_alert(name, round(price, 4))
-
-                last_prices[name] = price
+            if percent_diff >= 0.00002:
+                send_slack_alert("Bitcoin", price_binance, price_bitfinex, percent_diff)
 
         except Exception as e:
-            print("Error in crypto monitor:", e)
+            print("Error in monitor loop:", e)
 
-        time.sleep(60)
+        time.sleep(10)
 
 def start_crypto_monitor():
-    thread = threading.Thread(target=monitor_crypto, daemon=True)
-    thread.start()
+    global running, monitor_thread
+    if not running:
+        running = True
+        monitor_thread = threading.Thread(target=monitor_loop, daemon=True)
+        monitor_thread.start()
+
+def stop_crypto_monitor():
+    global running
+    running = False
