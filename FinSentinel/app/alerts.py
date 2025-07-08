@@ -1,25 +1,28 @@
-#Slack alerts
+# alerts.py
 import requests
 
-def send_slack_alert(coin_name, price_binance, price_bitfinex, percent_diff):
+def send_slack_alert(coin_name,pair_label, price_a, price_b, percent_diff):
     webhook_url = "https://hooks.slack.com/services/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"
     emoji = ":rotating_light:"  # Alert emoji
-    
+
+    # Extract exchange names from pair_label
+    exchange1, exchange2 = pair_label.split(" vs ")
+
     message = {
         "text": (
-            f"{emoji} {coin_name} price difference alert!\n"
-            f"Binance: EUR {price_binance:.6f}\n"
-            f"Bitfinex: EUR {price_bitfinex:.6f}\n"
+            f"{emoji} {coin_name} = {pair_label} price difference alert!\n"
+            f"{exchange1}: EUR {price_a:.6f}\n"
+            f"{exchange2}: EUR {price_b:.6f}\n"
             f"Difference: {percent_diff:.8f}%"
         )
     }
+
     try:
         response = requests.post(webhook_url, json=message)
         if response.status_code != 200:
-            print(f"Slack error for {coin_name}:", response.text)
+            print(f"Slack error for {pair_label}:", response.text)
     except Exception as e:
-        print(f"Slack exception for {coin_name}:", e)
-
+        print(f"Slack exception for {pair_label}:", e)
 
 #
 #ABV email alerts
