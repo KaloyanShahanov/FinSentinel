@@ -26,6 +26,6 @@ if not logger.hasHandlers():
     logger.addHandler(file_handler)
 
     # Stdout handler (for PowerShell or terminal)
-    stream_handler = logging.StreamHandler(sys.stdout)
-    stream_handler.setFormatter(formatter)
-    logger.addHandler(stream_handler)
+   # stream_handler = logging.StreamHandler(sys.stdout)
+   # stream_handler.setFormatter(formatter)
+   # logger.addHandler(stream_handler)
