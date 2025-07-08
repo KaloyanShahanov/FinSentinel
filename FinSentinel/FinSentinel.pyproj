@@ -26,6 +26,7 @@
   <ItemGroup>
     <Compile Include="app\alerts.py" />
     <Compile Include="app\dashboard.py" />
+    <Compile Include="app\logger.py" />
     <Compile Include="app\sentinel.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="env\Lib\site-packages\pip\_internal\build_env.py" />
@@ -713,6 +714,7 @@
     <Folder Include="env\Lib\site-packages\_distutils_hack\" />
     <Folder Include="env\Lib\site-packages\_distutils_hack\__pycache__\" />
     <Folder Include="env\Scripts\" />
+    <Folder Include="logs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\__pycache__\api.cpython-311.pyc" />
@@ -1305,6 +1307,8 @@
     <Content Include="env\Scripts\pip3.exe" />
     <Content Include="env\Scripts\python.exe" />
     <Content Include="env\Scripts\pythonw.exe" />
+    <Content Include="logs\crypto_monitor.log" />
+    <Content Include="logs\crypto_monitor_2025-07-08_21-47-36.log" />
     <Content Include="main.spec" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />

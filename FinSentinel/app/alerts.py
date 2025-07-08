@@ -1,5 +1,7 @@
 # alerts.py
 import requests
+from app.logger import logger
+
 
 def send_slack_alert(coin_name,pair_label, price_a, price_b, percent_diff):
     webhook_url = "https://hooks.slack.com/services/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"
@@ -20,9 +22,9 @@ def send_slack_alert(coin_name,pair_label, price_a, price_b, percent_diff):
     try:
         response = requests.post(webhook_url, json=message)
         if response.status_code != 200:
-            print(f"Slack error for {pair_label}:", response.text)
+            logger.info(f"Slack error for {pair_label}:{response.text}")
     except Exception as e:
-        print(f"Slack exception for {pair_label}:", e)
+        logger.exception(f"Slack exception for {pair_label}")
 
 #
 #ABV email alerts
