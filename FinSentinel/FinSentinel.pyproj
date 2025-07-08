@@ -1305,6 +1305,7 @@
     <Content Include="env\Scripts\pip3.exe" />
     <Content Include="env\Scripts\python.exe" />
     <Content Include="env\Scripts\pythonw.exe" />
+    <Content Include="main.spec" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
   </ItemGroup>
