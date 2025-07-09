@@ -25,7 +25,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app\alerts.py" />
-    <Compile Include="app\bitcoin-binance-vs-bitget.py" />
     <Compile Include="app\dashboard.py" />
     <Compile Include="app\logger.py" />
     <Compile Include="app\sentinel.py" />
@@ -563,11 +562,7 @@
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\__pycache__\" />
-    <Folder Include="build\" />
-    <Folder Include="build\main\" />
-    <Folder Include="build\main\localpycs\" />
     <Folder Include="data\" />
-    <Folder Include="dist\" />
     <Folder Include="env\" />
     <Folder Include="env\Include\" />
     <Folder Include="env\Lib\" />
@@ -720,22 +715,7 @@
   <ItemGroup>
     <Content Include="app\__pycache__\api.cpython-311.pyc" />
     <Content Include="app\__pycache__\__init__.cpython-311.pyc" />
-    <Content Include="build\main\Analysis-00.toc" />
-    <Content Include="build\main\base_library.zip" />
-    <Content Include="build\main\EXE-00.toc" />
-    <Content Include="build\main\localpycs\pyimod01_archive.pyc" />
-    <Content Include="build\main\localpycs\pyimod02_importers.pyc" />
-    <Content Include="build\main\localpycs\pyimod03_ctypes.pyc" />
-    <Content Include="build\main\localpycs\pyimod04_pywin32.pyc" />
-    <Content Include="build\main\localpycs\struct.pyc" />
-    <Content Include="build\main\main.pkg" />
-    <Content Include="build\main\PKG-00.toc" />
-    <Content Include="build\main\PYZ-00.pyz" />
-    <Content Include="build\main\PYZ-00.toc" />
-    <Content Include="build\main\warn-main.txt" />
-    <Content Include="build\main\xref-main.html" />
     <Content Include="data\sample.csv" />
-    <Content Include="dist\main.exe" />
     <Content Include="env\Lib\site-packages\distutils-precedence.pth" />
     <Content Include="env\Lib\site-packages\pip-21.2.3.dist-info\entry_points.txt" />
     <Content Include="env\Lib\site-packages\pip-21.2.3.dist-info\INSTALLER" />
