@@ -1,7 +1,7 @@
 # alerts.py
 import requests
 from app.logger import logger
-
+from app.shared_queue import price_diff_queue
 
 def send_slack_alert(coin_name,pair_label, price_a, price_b, percent_diff):
     webhook_url = "https://hooks.slack.com/services/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"
@@ -25,7 +25,24 @@ def send_slack_alert(coin_name,pair_label, price_a, price_b, percent_diff):
             logger.info(f"Slack error for {pair_label}:{response.text}")
     except Exception as e:
         logger.exception(f"Slack exception for {pair_label}")
+def send_exchange_rate_alert():
+    webhook_url = "https://hooks.slack.com/services/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"
+    emoji = ":warning:"  # Warning emoji
 
+    message = {
+        "text": (
+            f"{emoji} Exchange Rate API Alert!\n"
+            "USD to EUR exchange rate API is currently unavailable or failing.\n"
+            "Bitget price alerts requiring conversion to EUR are temporarily disabled."
+        )
+    }
+
+    try:
+        response = requests.post(webhook_url, json=message)
+        if response.status_code != 200:
+            logger.info(f"Slack error for exchange rate alert: {response.text}")
+    except Exception:
+        logger.exception("Slack exception for exchange rate alert")
 #
 #ABV email alerts
 #import smtplib
