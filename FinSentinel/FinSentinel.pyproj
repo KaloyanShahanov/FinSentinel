@@ -559,7 +559,6 @@
     <Compile Include="env\Lib\site-packages\_distutils_hack\override.py" />
     <Compile Include="env\Lib\site-packages\_distutils_hack\__init__.py" />
     <Compile Include="main.py" />
-    <Compile Include="main.py-fallout style working.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
@@ -1311,7 +1310,6 @@
     <Content Include="env\Scripts\pythonw.exe" />
     <Content Include="logs\crypto_monitor.log" />
     <Content Include="logs\crypto_monitor_2025-07-08_21-47-36.log" />
-    <Content Include="main.py-fallout style" />
     <Content Include="main.spec" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
