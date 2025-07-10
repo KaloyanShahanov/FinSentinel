@@ -25,9 +25,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app\alerts.py" />
+    <Compile Include="app\fetchers.py" />
     <Compile Include="app\dashboard.py" />
     <Compile Include="app\logger.py" />
     <Compile Include="app\sentinel.py" />
+    <Compile Include="app\sentinel-backup-code.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="env\Lib\site-packages\pip\_internal\build_env.py" />
     <Compile Include="env\Lib\site-packages\pip\_internal\cache.py" />

@@ -1,6 +1,5 @@
 # alerts.py
 import requests
-from app.logger import logger
 from app.shared_queue import price_diff_queue
 
 def send_slack_alert(coin_name,pair_label, price_a, price_b, percent_diff):

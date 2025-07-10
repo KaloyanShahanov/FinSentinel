@@ -1,7 +1,8 @@
 ﻿import tkinter as tk
 import logging
 
-from app.logger import logger
+from app.logger import get_logger
+logger = get_logger("price")
 from app.sentinel import start_crypto_monitor, stop_crypto_monitor
 
 # === Theme Colors and Fonts ===
